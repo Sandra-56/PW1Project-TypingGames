@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+html, body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden; 
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: monospace;
+  min-height: 100vh;
+  margin: 0;
+  padding-top: 0px;
+}
+
+#score {
+    position: absolute;
+    top: 10px;
+    left: 1375px;
+    font-size: 25px;
+}
+
+#box {
+    position: absolute;
+    top: 350px;
+    font-size: 50px;
+}
+
+#word {
+    position: absolute;
+    top: 200px;
+    font-size: 40px;
+}
+
+#zombie {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    background-image: "Zombies/Spiked.png";
+    left: 25px;
+    top: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+#hearths {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    top: 20px;
+    left: 20px;
+}
+
+#hearths > * {
+  width: 30px;
+  height: 30px;
+}
+    </style>
+</head>
+<body>
+    <div id = "hearths"> <img src="Icons/Full.png" alt="hearth" id = "1"> 
+        <img src="Icons/Full.png" alt="hearth" id = "2">
+    <img src="Icons/Full.png" alt="hearth" id = "3"></div>
+    <div id="score">0</div>
+    <div id="word"> content</div>
+    <div id="box"></div>
+    <div id = "zombie"></div>
+
+    <script>
+        const Score = document.getElementById("score");
+        let score = 0;
+        const Box = document.getElementById("box");
+        Box.textContent = "Type something";
+        let Start = true;
+
+        const images = Array.from(document.getElementById("hearths").children).reverse();
+        for (const img of images) 
+        {
+            img.setAttribute("full", "true");
+        }
+
+        const WordBox = document.getElementById("word");
+        let words = [];
+        fetch("Words/Medium.txt")
+            .then(response => response.text())
+            .then(text => {
+            words = text.split("\n");
+            PickAWord()
+        });
+        let CurrentWord = "";
+
+        function PickAWord()
+        {
+            const Random = Math.floor(Math.random() * words.length);
+            CurrentWord = words[Random].trim();
+            let letters = CurrentWord.split('');
+            let result = "";
+
+            while (letters.length>0)
+            {
+                let i = Math.floor(Math.random() * letters.length);
+                result += letters[i];
+                letters.splice(i, 1);
+            }
+            WordBox.textContent = result;
+        }
+
+        function Fetch(FileName)
+        {
+             fetch(FileName)
+                .then(response => response.text())
+                .then(text => {
+                text = text.split("\n");
+                words = words.concat(text);
+                PickAWord()
+                });
+        }
+
+        document.addEventListener("keydown", function(event){
+            if (event.key == "Backspace")
+            {
+                Box.textContent = Box.textContent.slice(0,-1);
+                return;
+            }
+            else if (event.key == "Shift")
+            {
+                return;
+            }
+            else if (event.key == "Enter")
+            {
+                if (Start) 
+            {
+                Box.textContent = "";
+                Start = false;
+                PickAWord()
+                return;
+            }
+
+                if (Box.textContent == CurrentWord.trim())
+                {
+                    Box.textContent = "";
+                    PickAWord()
+                    score += 1;
+                    Score.textContent = score;
+
+                    if (score == 10)
+                    {
+                        Fetch("Words/Medium.txt")
+                    } else if (score == 20)
+                    {
+                        Fetch("Words/Hard.txt")
+                    } else if (score == 30) 
+                    {
+                        Fetch("Words/Evil.txt")
+                    } else if (score == 40) 
+                    {
+                        words = []
+                        Fetch("Words/Medium.txt")
+                        Fetch("Words/Hard.txt")
+                        Fetch("Words/Evil.txt")
+                    } else if (score == 55) 
+                    {
+                        Fetch("Words/Insane.txt")
+                    } else if (score == 65)
+                    {
+                        words = []
+                        Fetch("Words/Hard.txt")
+                        Fetch("Words/Evil.txt")
+                        Fetch("Words/Insane.txt")
+                    } else if (score == 75)
+                    {
+                        Fetch("Words/TwoWords.txt")
+                    } else if (score == 80)
+                    {
+                        words = []
+                        Fetch("Words/Evil.txt")
+                        Fetch("Words/Insane.txt")
+                        Fetch("Words/TwoWords.txt")
+                    } else if (score == 90)
+                    {
+                        words = []
+                        Fetch("Words/Insane.txt")
+                        Fetch("Words/TwoWords.txt")
+                    } else if (score == 95)
+                    {
+                        Fetch("Words/ThreeWords.txt")
+                    } else if (score == 105)
+                    {
+                        words = []
+                        Fetch("Words/TwoWords.txt")
+                        Fetch("Words/ThreeWords.txt")
+                    } else if (score == 115)
+                    {
+                        Fetch("Words/FourWords.txt")
+                    } else if (score == 125)
+                    {
+                        words = []
+                        Fetch("Words/ThreeWords.txt")
+                        Fetch("Words/FourWords.txt")
+                    } else if (score == 150)
+                    {
+                        words = []
+                        Fetch("Words/FourWords.txt")
+                    }
+                }
+                else
+                {
+                    Box.textContent = "wrong, right answer: " + CurrentWord;
+                    score -= 1;
+                    Score.textContent = score;
+                    Start = true;
+
+                    for (const img of images) 
+                    {
+                        if (img.getAttribute("full") == "true")
+                        {
+                            img.setAttribute("full", "false");
+                            img.src = "Icons/Broken.png";
+                            return;
+                        }
+                    }
+                    location.reload(true);
+                }
+                return;
+            }
+
+            if (Start) 
+            {
+                Box.textContent = "";
+                Start = false;
+            }
+            Box.textContent += event.key;
+        });
+    </script>
+</body>
+</html>
