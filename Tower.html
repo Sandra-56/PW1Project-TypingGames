@@ -24,6 +24,36 @@ body {
   padding-top: 0px;
 }
 
+nav{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    height: 50px;
+    width: 500px;
+    border: 5px black;
+    border-radius: 5px;
+    border-style: solid;
+}
+nav > ul{
+    position: inherit;
+    list-style-type: none;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-right: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+nav > ul > li > a >img{
+    padding-top: 2.5px;
+    height: 45px;
+    width: auto;
+}
+
 #score {
     position: absolute;
     top: 10px;
@@ -80,6 +110,14 @@ body {
     </style>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="Main.html"><img src="Icons/Home.png" alt="home"></a></li>
+            <li><a href="#" onclick="PauseFunction(event)"><img src="Icons/Play.png" alt="Play" id="PPButton"></a></li>
+            <li><a href="#" onclick="Reaload()"><img src="Icons/Reaload.png" alt="Reaload"></a></li>
+        </ul>
+     </nav>
+
     <div id = "hearths"> <img src="Icons/Full.png" alt="hearth" id = "1"> 
         <img src="Icons/Full.png" alt="hearth" id = "2">
     <img src="Icons/Full.png" alt="hearth" id = "3"></div>
@@ -152,6 +190,9 @@ body {
         }
 
         document.addEventListener("keydown", function(event){
+            if (Paused){
+                return;
+            }
             if (event.key == "Backspace")
             {
                 Box.textContent = Box.textContent.slice(0,-1);
@@ -260,6 +301,22 @@ body {
             }
             Box.textContent += event.key;
         });
+
+        let Paused = false;
+        const PPButton = document.getElementById('PPButton');
+        function PauseFunction(e){
+            e.preventDefault();
+            if (Paused){
+                PPButton.src = "Icons/Play.png";
+                Paused = false;
+            } else{
+                PPButton.src = "Icons/Pause.png";
+                Paused = true;
+            }
+        }
+        function Reaload(){
+            location.reload(true);
+        }
     </script>
 </body>
 </html>

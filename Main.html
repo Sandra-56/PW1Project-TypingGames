@@ -49,18 +49,22 @@
             color: inherit;
         }
         #DropDown{
-            background-color: #1D2659;
-             position: absolute;
+            background-color: #2E3C8C;
+            position: absolute;
             top: 100%;
-            left: 0;
             z-index: 4;
             padding: 10px 0;
+            display: none;
         }
-        #DropDown-content > a {
+        #DropDown > a {
             display: block;
             padding: 10px 20px;
             color: white;
             text-decoration: none;
+        }
+
+        #DropDown > a:hover{
+          background-color: #283477;
         }
 
         .Game{
@@ -134,7 +138,7 @@
         <nav>
             <ul>
                 <li><a href="Main.html">home</a></li>
-                <li><a href="#" onclick="DropDownFunction()">games</a> <div id = DropDown></div></li>
+                <li><a href="#" onclick="DropDownFunction(event)">games</a> <div id = DropDown></div></li>
                 <li><a href="Info.html">info</a></li>
                 <li><a href="Ideas.html">ideas</a></li>
             </ul>
@@ -146,32 +150,41 @@
   {
     name: "Tower",
     description: "- Type words to build your tower",
-    image: "Icons/Tower.png",
+    image: "GameVisuals/Tower.png",
     link: "Tower.html"
   },
   {
     name: "Combo",
     description: "- you just type the prepared sentences, try not to make any mistakes",
-    image: "Icons/Tower.png",
+    image: "GameVisuals/Tower.png",
     link: "Combo.html"
   },
   {
     name: "Scrambles",
     description: "- a game where  you have to unscramble words, the least fun one yet",
-    image: "Icons/Tower.png",
+    image: "GameVisuals/Scrambles.png",
     link: "Scrambles.html"
+  },
+  {
+    name: "Reaction",
+    description: "You have to press the correct buttons fast",
+    image: "GameVisuals/Tower.png",
+    link: "Reaction.html"
   }
 ];
 
 const DropDown = document.getElementById('DropDown');
 
-function DropDownFunction(){
-    DropDown.style.display = DropDown.style.display === 'block' ? 'none' : 'block';
+function DropDownFunction(e){
+  e.preventDefault();
+  DropDown.style.display = DropDown.style.display === 'block' ? 'none' : 'block';
 }
 
 games.forEach(game => {
-  document.body.innerHTML += `
-    <div class="Game" id = "${game.name}">
+  const gameDiv = document.createElement('div');
+  gameDiv.className = "Game";
+  gameDiv.id = game.name;
+  gameDiv.innerHTML = `
       <div id="Name">${game.name} game</div>
 
       <div id="Picture">
@@ -184,8 +197,9 @@ games.forEach(game => {
         </div>
         <div id="Info">${game.description}</div>
       </div>
-    </div>
   `;
+  document.body.appendChild(gameDiv);
+
   const link = document.createElement('a');
   link.textContent = game.name;
   link.href = "#";
@@ -201,9 +215,7 @@ function scrollFunction(id) {
   if (!el) return;
 
   const viewportHeight = window.innerHeight;
-
   const elementTop = el.getBoundingClientRect().top + window.scrollY;
-
   const scrollPos = elementTop - viewportHeight / 2 + el.offsetHeight / 2;
 
   window.scrollTo({

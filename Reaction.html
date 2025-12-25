@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        html, body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; 
+        }
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: monospace;
+            min-height: 100vh;
+            padding-top: 0px;
+        }
+
+        nav{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            height: 50px;
+            width: 500px;
+            border: 5px black;
+            border-radius: 5px;
+            border-style: solid;
+        }
+        nav > ul{
+            position: inherit;
+            list-style-type: none;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding-right: 20px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        nav > ul > li > a >img{
+            padding-top: 2.5px;
+            height: 45px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+     <nav>
+        <ul>
+            <li><a href="Main.html"><img src="Icons/Home.png" alt="home"></a></li>
+            <li><a href="#" onclick="PauseFunction(event)"><img src="Icons/Play.png" alt="Play" id="PPButton"></a></li>
+            <li><a href="#" onclick="Reaload()"><img src="Icons/Reaload.png" alt="Reaload"></a></li>
+        </ul>
+     </nav>
+
+     <script>
+        let Paused = false;
+        const PPButton = document.getElementById('PPButton');
+        function PauseFunction(e){
+            e.preventDefault();
+            if (Paused){
+                PPButton.src = "Icons/Pause.png";
+                Paused = false;
+            } else{
+                PPButton.src = "Icons/Play.png";
+                Paused = true;
+            }
+        }
+        function Reaload(){
+            location.Reaload(true);
+        }
+     </script>
+</body>
+</html>
