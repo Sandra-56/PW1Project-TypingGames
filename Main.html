@@ -131,6 +131,41 @@
             text-align: center;
             margin: 10px;
         }
+
+        #InfoDiv{
+          display: none;
+          background-color: #DFE5F2;
+          width: 100%;
+          height: 500px;
+          padding-left: 20px;
+        }
+
+        #IdeasDiv{
+          display: none;
+          background-color: #DFE5F2;
+          width: 100%;
+          margin-top: 112.5px;
+          height: 650px;
+          flex-direction: column;
+          font-size: 50px;
+        }
+        #IdeasDiv > div{
+          height: 75px;
+          width: 100%;
+          border: 2px black;
+          border-style: solid;
+        }
+        #Subject > button{
+          height: 100%;
+          width: auto;
+          font-size: 50px;
+        }
+        #GNDropDown{
+          width: 150px;
+        }
+        #TextInput{
+          height: 350px !important;
+        }
     </style>
 </head>
 <body>
@@ -139,90 +174,134 @@
             <ul>
                 <li><a href="Main.html">home</a></li>
                 <li><a href="#" onclick="DropDownFunction(event)">games</a> <div id = DropDown></div></li>
-                <li><a href="Info.html">info</a></li>
-                <li><a href="Ideas.html">ideas</a></li>
+                <li><a href="#" onclick="ShowInfo()">info</a></li>
+                <li><a href="#" onclick="ShowIdeas()">ideas</a></li>
             </ul>
         </nav>
     </header>
 
+    <div id = "InfoDiv">
+      <h1>
+        The info page
+      </h1>
+    </div>
+
+    <div id = "IdeasDiv">
+      <form>
+      <div id = "Subject"><button>Bug report</button><button>Improvment idea</button><button>Game idea</button></div>
+      <div id = "GameName">Related game or page <select name="pages" id="GNDropDown">
+        <option value="Main menu"></option> <option value="Tower game"> <option value="Combo game"></option> </option> <option value="Other"></option>
+      </select></div>
+      <div id = "TextInput"></div>
+      <div id = "ConcatCheck"></div>
+      <div id = "ContactInfo"></div>
+      </form>
+    </div>
+
     <script>
-        const games = [
-  {
-    name: "Tower",
-    description: "- Type words to build your tower",
-    image: "GameVisuals/Tower.png",
-    link: "Tower.html"
-  },
-  {
-    name: "Combo",
-    description: "- you just type the prepared sentences, try not to make any mistakes",
-    image: "GameVisuals/Tower.png",
-    link: "Combo.html"
-  },
-  {
-    name: "Scrambles",
-    description: "- a game where  you have to unscramble words, the least fun one yet",
-    image: "GameVisuals/Scrambles.png",
-    link: "Scrambles.html"
-  },
-  {
-    name: "Reaction",
-    description: "You have to press the correct buttons fast",
-    image: "GameVisuals/Tower.png",
-    link: "Reaction.html"
-  }
-];
+      const games = [
+      {
+        name: "Tower",
+        description: "- Type words to build your tower",
+        image: "GameVisuals/Tower.png",
+        link: "Tower.html"
+      },
+      {
+        name: "Combo",
+        description: "- you just type the prepared sentences, try not to make any mistakes",
+        image: "GameVisuals/Tower.png",
+        link: "Combo.html"
+      },
+      {
+        name: "Scrambles",
+        description: "- a game where  you have to unscramble words, the least fun one yet",
+        image: "GameVisuals/Scrambles.png",
+        link: "Scrambles.html"
+      },
+      {
+        name: "Reaction",
+        description: "- You have to press the correct buttons fast",
+        image: "GameVisuals/Tower.png",
+        link: "Reaction.html"
+      }
+    ];
 
-const DropDown = document.getElementById('DropDown');
+    const DropDown = document.getElementById('DropDown');
 
-function DropDownFunction(e){
-  e.preventDefault();
-  DropDown.style.display = DropDown.style.display === 'block' ? 'none' : 'block';
-}
+    function DropDownFunction(e){
+      e.preventDefault();
+      DropDown.style.display = DropDown.style.display === 'block' ? 'none' : 'block';
+    }
 
-games.forEach(game => {
-  const gameDiv = document.createElement('div');
-  gameDiv.className = "Game";
-  gameDiv.id = game.name;
-  gameDiv.innerHTML = `
-      <div id="Name">${game.name} game</div>
+    games.forEach(game => {
+      const gameDiv = document.createElement('div');
+      gameDiv.className = "Game";
+      gameDiv.id = game.name;
+      gameDiv.innerHTML = `
+          <div id="Name">${game.name} game</div>
 
-      <div id="Picture">
-        <img src="${game.image}">
-      </div>
+          <div id="Picture">
+            <img src="${game.image}">
+          </div>
 
-      <div id="Side">
-        <div id="Play">
-          <button onclick="window.location.href='${game.link}'">PLAY</button>
-        </div>
-        <div id="Info">${game.description}</div>
-      </div>
-  `;
-  document.body.appendChild(gameDiv);
+          <div id="Side">
+            <div id="Play">
+              <button onclick="window.location.href='${game.link}'">PLAY</button>
+            </div>
+            <div id="Info">${game.description}</div>
+          </div>
+        `;
+      document.body.appendChild(gameDiv);
 
-  const link = document.createElement('a');
-  link.textContent = game.name;
-  link.href = "#";
-  link.onclick = () => {
-    scrollFunction(game.name);
-    DropDown.style.display = 'none';
-  }
-  DropDown.appendChild(link);
-});
+      const link = document.createElement('a');
+      link.textContent = game.name;
+      link.href = "#";
+      link.onclick = () => {
+        scrollFunction(game.name);
+        DropDown.style.display = 'none';
+      }
+      DropDown.appendChild(link);
+    });
 
-function scrollFunction(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
+    function scrollFunction(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
 
-  const viewportHeight = window.innerHeight;
-  const elementTop = el.getBoundingClientRect().top + window.scrollY;
-  const scrollPos = elementTop - viewportHeight / 2 + el.offsetHeight / 2;
+      GamesToHide.forEach(game => {
+        game.style.display = 'flex';
+      });
+      InfoDiv.style.display = "none";
+      IdeasDiv.style.display = 'none';
 
-  window.scrollTo({
-    top: scrollPos,
-    behavior: 'smooth'
-  });
-}
+      const viewportHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top + window.scrollY;
+      const scrollPos = elementTop - viewportHeight / 2 + el.offsetHeight / 2;
+
+      window.scrollTo({
+        top: scrollPos,
+        behavior: 'smooth'
+      });
+    }
+
+    let GamesToHide = document.querySelectorAll('.Game');
+    let InfoDiv = document.getElementById('InfoDiv');
+    let IdeasDiv = document.getElementById('IdeasDiv');
+
+    function ShowInfo(){
+      GamesToHide.forEach(game => {
+        game.style.display = 'none';
+      });
+      IdeasDiv.style.display = 'none';
+      InfoDiv.style.display = 'flex';
+    }
+
+    function ShowIdeas(){
+      GamesToHide.forEach(game =>{
+        game.style.display = 'none';
+      })
+      InfoDiv.style.display = 'none';
+      IdeasDiv.style.display = "flex";
+    }
     </script>
 </body>
 </html>

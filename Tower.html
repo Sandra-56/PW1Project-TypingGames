@@ -204,6 +204,7 @@ nav > ul > li > a >img{
             }
             else if (event.key == "Enter")
             {
+                event.preventDefault();
                 if (Box.textContent == WordBox.textContent.trim())
                 {
                     AddBlock()
@@ -271,6 +272,8 @@ nav > ul > li > a >img{
                         words = []
                         Fetch("Words/FourWords.txt")
                     }
+                }else if (Box.textContent.trim() == "" || Box.textContent == "wrong" || Box.textContent == "Type something"){
+                    return;
                 }
                 else
                 {
