@@ -8,6 +8,8 @@
         html, body {
             margin: 0;
             padding: 0;
+            max-width: 100vw;
+            overflow-x: hidden;
         }
         body 
         {
@@ -145,26 +147,57 @@
           background-color: #DFE5F2;
           width: 100%;
           margin-top: 112.5px;
-          height: 650px;
+          height: 670px;
           flex-direction: column;
           font-size: 50px;
         }
-        #IdeasDiv > div{
+        #IdeasDiv > form > div{
           height: 75px;
           width: 100%;
-          border: 2px black;
+          border: 2px white;
           border-style: solid;
+          display: flex;
+          align-items: center;
         }
-        #Subject > button{
-          height: 100%;
+        .Buttons{
+          height: 80%;
           width: auto;
           font-size: 50px;
+          background-color: white;
+          border-radius: 5px;
+          margin-left: 10px;
         }
-        #GNDropDown{
-          width: 150px;
+        .Buttons:hover{
+          cursor: pointer;
         }
         #TextInput{
           height: 350px !important;
+        }
+        #TextInput > textarea{
+          height: 100%;
+          width: 100%;
+          font-size: 25px;
+        }
+
+        #ContactCheck > input{
+          width: 50px;
+          height: 50px;
+          margin-left: 10px;
+        }
+        .Contacts{
+          display: none;
+          width: calc(100vw / 3 - 80px);
+          height: 50px;
+          margin-left: 10px;
+          font-size: 20px;
+          line-height: 50px;
+        }
+        #Instruction{
+          display: none;
+          color: #6C5666;
+          font-size: 20px;
+          position: absolute;
+          right: 10px;
         }
     </style>
 </head>
@@ -188,13 +221,19 @@
 
     <div id = "IdeasDiv">
       <form>
-      <div id = "Subject"><button>Bug report</button><button>Improvment idea</button><button>Game idea</button></div>
-      <div id = "GameName">Related game or page <select name="pages" id="GNDropDown">
-        <option value="Main menu"></option> <option value="Tower game"> <option value="Combo game"></option> </option> <option value="Other"></option>
-      </select></div>
-      <div id = "TextInput"></div>
-      <div id = "ConcatCheck"></div>
-      <div id = "ContactInfo"></div>
+      <div id = "Subject"><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Bug report</button><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Improvment idea</button><button class="Buttons" onclick="IdeaSubjects(this, 2, event)">Game idea</button></div>
+      <div id = "GameName" style="padding-left: 10px;">Related game or page 
+        <select name="pages" class="Buttons" aria-placeholder="choose one">
+          <option value="MainMenu">Main menu</option> <option value="Tower">Tower game </option> <option value="Combo">Combo game</option> <option value="Other">Other</option>
+        </select>
+        <textarea placeholder="game name" class="Buttons" style="display: none;"></textarea>
+      </div>
+      <div id = "TextInput"> <textarea name="TextInput" placeholder="Type here"></textarea></div>
+      <div id = "ContactCheck" style="padding-left: 10px;">Would you like to be contacted about your idea?<input type="checkbox" onchange="ContactCheckBox(this.checked)"> <label id="Instruction">Fill in at least one contact option</label></div>
+      <div id = "ContactInfo">
+        <textarea placeholder="email" class="Contacts"></textarea> <textarea placeholder="phone number" class="Contacts"></textarea> <textarea placeholder="discord" class="Contacts"></textarea>
+        <button type="submit" class="Buttons" >Submit</button> 
+      </div>
       </form>
     </div>
 
@@ -295,12 +334,55 @@
       InfoDiv.style.display = 'flex';
     }
 
+
+
     function ShowIdeas(){
       GamesToHide.forEach(game =>{
         game.style.display = 'none';
       })
       InfoDiv.style.display = 'none';
       IdeasDiv.style.display = "flex";
+    }
+
+    const Contacts = document.querySelectorAll('.Contacts');
+    const Instruction = document.getElementById('Instruction');
+    function ContactCheckBox(state){
+      if (state){
+        Contacts.forEach(Contact => {
+          Contact.style.display = 'block';
+        })
+        Instruction.style.display = 'block';
+      } else
+      {
+        Contacts.forEach(Contact => {
+          Contact.style.display = 'none';
+        })
+        Instruction.style.display = 'none';
+      }
+    }
+
+    const GameName = document.getElementById('GameName')
+    let OldSelecion;
+    function IdeaSubjects(button, which, e){
+      e.preventDefault();
+      if (OldSelecion == button){
+        return;
+      }
+      button.style.backgroundColor = '#2D6A61';
+      if (OldSelecion){
+        OldSelecion.style.backgroundColor = "White";
+      }
+      OldSelecion = button;
+
+      if (which == 2){
+        GameName.textContent = "Your game's name";
+        GameName.querySelector("textarea").style.display = 'block';
+        GameName.querySelector("select").style.display = 'none';
+      } else{
+        GameName.textContent = "Related game or page";
+        GameName.querySelector("textarea").style.display = 'none';
+        GameName.querySelector("select").style.display = 'inline-block';
+      }
     }
     </script>
 </body>
