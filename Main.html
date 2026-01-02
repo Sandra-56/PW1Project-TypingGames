@@ -22,6 +22,12 @@
             min-height: 100vh;
         }
 
+
+
+        .Hidden {
+          display: none !important;
+        }
+
         header{
             position: sticky;
             top: 0;
@@ -35,6 +41,9 @@
             font-size: 35px;
             height: 50px;
             background-color: #1D2659;
+        }
+        @media (max-width: 525px) {
+          nav {font-size: 14px;}
         }
         nav > ul{
             list-style-type: none;
@@ -69,6 +78,8 @@
           background-color: #283477;
         }
 
+
+
         .Game{
             height: 500px;
             display: flex;
@@ -85,7 +96,7 @@
             flex: 1;
             text-align: center;
             height: 100%;
-            font-size: 125px;
+            font-size: 6.5vw;
         }
         #Picture{
             display: flex;
@@ -102,7 +113,6 @@
             border-radius: 10px;
             z-index: 2;
         }
-
         #Side{
             background-color: white;
             flex: 1;
@@ -117,7 +127,7 @@
             align-items: end;
         }
         #Play > button{
-            width: 250px;
+            width: 13vw;
             height: 60px;
             background-color: #4E63D9;
             color: white;
@@ -125,15 +135,17 @@
             border-radius: 10px;
             cursor: pointer;
         }
+
+
+
         #Info{
             flex: 1;
             display: flex;
             align-items: start;
-            font-size: 30px;
+            font-size: 1.5vw;
             text-align: center;
             margin: 10px;
         }
-
         #InfoDiv{
           display: none;
           background-color: #DFE5F2;
@@ -142,6 +154,8 @@
           padding-left: 20px;
         }
 
+
+
         #IdeasDiv{
           display: none;
           background-color: #DFE5F2;
@@ -149,7 +163,7 @@
           margin-top: 112.5px;
           height: 670px;
           flex-direction: column;
-          font-size: 50px;
+          font-size: 2.5vw;
         }
         #IdeasDiv > form > div{
           height: 75px;
@@ -162,7 +176,7 @@
         .Buttons{
           height: 80%;
           width: auto;
-          font-size: 50px;
+          font-size: 2.5vw;
           background-color: white;
           border-radius: 5px;
           margin-left: 10px;
@@ -176,7 +190,7 @@
         #TextInput > textarea{
           height: 100%;
           width: 100%;
-          font-size: 25px;
+          font-size: 1.3vw;
         }
 
         #ContactCheck > input{
@@ -189,13 +203,16 @@
           width: calc(100vw / 3 - 80px);
           height: 50px;
           margin-left: 10px;
-          font-size: 20px;
+          font-size: 1vw;
           line-height: 50px;
+        }
+        #ContactCheck > input{
+          width: 2.5vw;
         }
         #Instruction{
           display: none;
           color: #6C5666;
-          font-size: 20px;
+          font-size: 1vw;
           position: absolute;
           right: 10px;
         }
@@ -213,26 +230,29 @@
         </nav>
     </header>
 
+
+
     <div id = "InfoDiv">
       <h1>
         The info page
       </h1>
     </div>
 
+    
     <div id = "IdeasDiv">
       <form>
-      <div id = "Subject"><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Bug report</button><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Improvment idea</button><button class="Buttons" onclick="IdeaSubjects(this, 2, event)">Game idea</button></div>
+      <div id = "Subject"><button class="Buttons" onclick="IdeaSubjects(this, 1, event)" style="background-color: #2D6A61;" id="FirstButton">Bug report</button><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Improvment idea</button><button class="Buttons" onclick="IdeaSubjects(this, 2, event)">Game idea</button></div>
       <div id = "GameName" style="padding-left: 10px;">Related game or page 
-        <select name="pages" class="Buttons" aria-placeholder="choose one">
+        <select name="pages" class="Buttons" aria-placeholder="choose one" id = "One">
           <option value="MainMenu">Main menu</option> <option value="Tower">Tower game </option> <option value="Combo">Combo game</option> <option value="Other">Other</option>
         </select>
-        <textarea placeholder="game name" class="Buttons" style="display: none;"></textarea>
+        <textarea placeholder="game name" class="Buttons" id = "Two"></textarea>
       </div>
       <div id = "TextInput"> <textarea name="TextInput" placeholder="Type here"></textarea></div>
       <div id = "ContactCheck" style="padding-left: 10px;">Would you like to be contacted about your idea?<input type="checkbox" onchange="ContactCheckBox(this.checked)"> <label id="Instruction">Fill in at least one contact option</label></div>
       <div id = "ContactInfo">
         <textarea placeholder="email" class="Contacts"></textarea> <textarea placeholder="phone number" class="Contacts"></textarea> <textarea placeholder="discord" class="Contacts"></textarea>
-        <button type="submit" class="Buttons" >Submit</button> 
+        <button type="submit" class="Buttons" style="background-color: #2D6A61;">Submit</button> 
       </div>
       </form>
     </div>
@@ -246,10 +266,10 @@
         link: "Tower.html"
       },
       {
-        name: "Combo",
+        name: "Flow",
         description: "- you just type the prepared sentences, try not to make any mistakes",
         image: "GameVisuals/Tower.png",
-        link: "Combo.html"
+        link: "Flow.html"
       },
       {
         name: "Scrambles",
@@ -361,8 +381,13 @@
       }
     }
 
-    const GameName = document.getElementById('GameName')
-    let OldSelecion;
+    const GameName = document.getElementById('GameName');
+    const One = document.getElementById('One');
+    const COne = One.cloneNode(true);
+    const Two = document.getElementById('Two');
+    const CTwo = Two.cloneNode(true);
+    Two.remove();
+    let OldSelecion = document.getElementById('FirstButton');
     function IdeaSubjects(button, which, e){
       e.preventDefault();
       if (OldSelecion == button){
@@ -376,12 +401,10 @@
 
       if (which == 2){
         GameName.textContent = "Your game's name";
-        GameName.querySelector("textarea").style.display = 'block';
-        GameName.querySelector("select").style.display = 'none';
+        GameName.appendChild(CTwo.cloneNode(true));
       } else{
         GameName.textContent = "Related game or page";
-        GameName.querySelector("textarea").style.display = 'none';
-        GameName.querySelector("select").style.display = 'inline-block';
+        GameName.appendChild(COne.cloneNode(true));
       }
     }
     </script>

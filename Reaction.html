@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reaction game</title>
 
     <style>
         html, body {
@@ -12,24 +12,31 @@
             overflow: hidden; 
         }
         body {
-            background-color: #ffffff;
+            background-color: #DFE5F2;
             color: #000000;
             font-family: monospace;
             min-height: 100vh;
             padding-top: 0px;
         }
 
+        header{
+            background-color: #1D2659;
+            width: 100%;
+            height: 3vw;
+        }
         nav{
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            background-color: white;
-            height: 50px;
-            width: 500px;
-            border: 5px black;
-            border-radius: 5px;
-            border-style: solid;
+            background-color: transparent;
+            height: 2.6vw;
+            width: 26vw;
+        }
+        @media (max-width: 600px){
+            nav{
+                height: 4vw;
+            }
         }
         nav > ul{
             position: inherit;
@@ -44,36 +51,185 @@
             padding: 0;
         }
         nav > ul > li > a >img{
-            padding-top: 2.5px;
-            height: 45px;
+            padding-top: 6px;
+            height: 2.35vw;
             width: auto;
+            filter: invert(1);
+        }
+        #Score{
+            color: white;
+            font-size: 30px;
+            width: auto;
+            position: absolute;
+            left: 65vw;
+            top: 10px;
+        }
+
+
+
+        #PlayArea{
+            position: absolute;
+            width: 100%;
+            height: 80%;
+            bottom: 50%;
+            transform: translateY(calc(50% + 1.5vw));
+            background-color: white;
+        }
+        .key {
+            position: absolute;
+            font-size: 50px;
         }
     </style>
 </head>
 <body>
-     <nav>
-        <ul>
-            <li><a href="Main.html"><img src="Icons/Home.png" alt="home"></a></li>
-            <li><a href="#" onclick="PauseFunction(event)"><img src="Icons/Play.png" alt="Play" id="PPButton"></a></li>
-            <li><a href="#" onclick="Reaload()"><img src="Icons/Reaload.png" alt="Reaload"></a></li>
-        </ul>
-     </nav>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="Main.html"><img src="Icons/Home.png" alt="home"></a></li>
+                <li><a href="#" onclick="PauseFunction(event)"><img src="Icons/Play.png" alt="Play" id="PPButton"></a></li>
+                <li><a href="#" onclick="Reaload()"><img src="Icons/Reaload.png" alt="Reaload"></a></li>
+            </ul>
+        </nav>
+        <div id = "Score">
+            score <label id="ScoreNumber">0</label>
+        </div>
+    </header>
+
+    <div id = "PlayArea"></div>
 
      <script>
-        let Paused = false;
+        const keyGroups = {
+            leftHand: ['a', 's', 'd', 'f', 'w', 'q', 'e', 'r'],
+            rightHand: ['j', 'k', 'l', 'i', 'u', 'o', 'p'],
+            bothUpdate: ['y','x','c','v','m','n','b','h'],
+            middle: ['t','z','g'],
+            numbers: ['0','1','2','3','4','5','6','7','8','9'],
+            specials: ['Enter', 'Backspace', ';', 'Shift', 'Tab', 'Constrol', 'Alt', 'Delete'],
+        };
+        let ActiveKeys = keyGroups.leftHand;
+
+        const PlayArea = document.getElementById('PlayArea');
+        let SpawnTime = 3500;
+        let DeleteTime = 5000;
+        const ScoreNumber = document.getElementById('ScoreNumber');
+        let score = 0;
+        let HighScore = 0;
+        let Paused = true;
+
+        function scheduleGenerate() {
+        if (!Paused) Generate();
+        setTimeout(scheduleGenerate, SpawnTime);
+        }
+
+        scheduleGenerate();
+
+        function Generate(){
+            const key = document.createElement('div');
+            key.className = 'key';
+            const Random = Math.floor(Math.random() * ActiveKeys.length);
+            key.textContent = ActiveKeys[Random];
+
+            const x = (PlayArea.clientWidth - 50) * Math.random();
+            const y = (PlayArea.clientHeight - 35) * Math.random();
+            key.style.left = x + 'px';
+            key.style.top = y + 'px';
+
+            PlayArea.appendChild(key);
+
+            let elapsed = 0;
+            const step = 50;
+
+            const interval = setInterval(() => {
+                if (Paused) return;
+
+                elapsed += step;
+
+                if (elapsed >= DeleteTime) {
+                clearInterval(interval);
+                if (document.body.contains(key)) {
+                    key.remove();
+                    score--;
+                    ScoreNumber.textContent = score;
+                }
+                }
+            }, step);
+        }
+
+        document.addEventListener("keydown", function(event){
+            if (Paused){
+                return;
+            }
+            let Return = false;
+            const keys = document.querySelectorAll('.key');
+
+            for (const key of keys) {
+                if (key.textContent === event.key) {
+                    key.textContent = "✔️";
+                    score ++;
+                    ScoreNumber.textContent = score;
+                    Return = true
+                    setTimeout(() => {
+                        key.remove();
+                        return;
+                    }, 2000);
+                }
+            }
+            if (Return){
+                if (HighScore < score){
+                    HighScore = score;
+                } else return;
+                if (score == 5){
+                    SpawnTime = 2500;
+                } else if (score == 15){
+                    SpawnTime = 1500;
+                } else if (score == 20){
+                    SpawnTime = 3000;
+                    ActiveKeys = keyGroups.rightHand;
+                } else if (score == 30){
+                    SpawnTime = 1500;
+                } else if (score == 35){
+                    ActiveKeys = ActiveKeys.concat(keyGroups.leftHand);
+                } else if (score == 50){
+                    ActiveKeys = ActiveKeys.concat(keyGroups.bothUpdate)
+                    SpawnTime = 2000;
+                } else if (score == 55){
+                    ActiveKeys = ActiveKeys.concat(keyGroups.middle)
+                } else if (score == 60){
+                    SpawnTime = 1500;
+                } else if (score == 70){
+                    ActiveKeys = ActiveKeys.concat(keyGroups.numbers)
+                    SpawnTime = 2500;
+                } else if (score == 75){
+                    SpawnTime = 2000;
+                } else if (score == 90){
+                    ActiveKeys = ActiveKeys.concat(keyGroups.specials)
+                    SpawnTime = 2000;
+                } else if (score == 100){
+                    SpawnTime = 1500;
+                } else if (score == 110){
+                    SpawnTime = 1000;
+                }
+                return;
+            }
+            score --;
+            ScoreNumber.textContent = score;
+        })
+
+
+
         const PPButton = document.getElementById('PPButton');
         function PauseFunction(e){
             e.preventDefault();
             if (Paused){
-                PPButton.src = "Icons/Pause.png";
+                PPButton.src = "Icons/Play.png";
                 Paused = false;
             } else{
-                PPButton.src = "Icons/Play.png";
+                PPButton.src = "Icons/Pause.png";
                 Paused = true;
             }
         }
         function Reaload(){
-            location.Reaload(true);
+            location.reload(true);
         }
      </script>
 </body>

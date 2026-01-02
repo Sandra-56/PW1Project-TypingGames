@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tower game</title>
     <style>
 
 html, body {
@@ -30,11 +30,16 @@ nav{
     left: 50%;
     transform: translateX(-50%);
     background-color: white;
-    height: 50px;
-    width: 500px;
-    border: 5px black;
+    height: 2.6vw;
+    width: 26vw;
+    border: 0.25vw black;
     border-radius: 5px;
     border-style: solid;
+}
+@media (max-width: 600px){
+    nav{
+        height: 4vw;
+    }
 }
 nav > ul{
     position: inherit;
@@ -50,14 +55,14 @@ nav > ul{
 }
 nav > ul > li > a >img{
     padding-top: 2.5px;
-    height: 45px;
+    height: 2.35vw;
     width: auto;
 }
 
 #score {
     position: absolute;
     top: 10px;
-    left: 1375px;
+    left: 75vw;
     font-size: 25px;
 }
 
@@ -145,7 +150,7 @@ nav > ul > li > a >img{
 
         const WordBox = document.getElementById("word");
         let words = [];
-        fetch("Words/Easy.txt")
+        fetch("Words/ThreeLetters.txt")
             .then(response => response.text())
             .then(text => {
             words = text.split("\n");
@@ -180,13 +185,13 @@ nav > ul > li > a >img{
 
         function Fetch(FileName)
         {
-             fetch(FileName)
-                            .then(response => response.text())
-                            .then(text => {
-                            text = text.split("\n");
-                            words = words.concat(text);
-                            PickAWord()
-                        });
+            fetch(FileName)
+                .then(response => response.text())
+                    .then(text => {
+                        text = text.split("\n");
+                        words = words.concat(text);
+                    PickAWord()
+            });
         }
 
         document.addEventListener("keydown", function(event){
@@ -218,38 +223,38 @@ nav > ul > li > a >img{
                         Fetch("Words/Medium.txt")
                     } else if (score == 20)
                     {
-                        Fetch("Words/Hard.txt")
+                        Fetch("Words/FiveLetters.txt")
                     } else if (score == 30) 
                     {
-                        Fetch("Words/Evil.txt")
+                        Fetch("Words/SixLetters.txt")
                     } else if (score == 40) 
                     {
                         words = []
                         Fetch("Words/Medium.txt")
-                        Fetch("Words/Hard.txt")
-                        Fetch("Words/Evil.txt")
+                        Fetch("Words/FiveLetters.txt")
+                        Fetch("Words/SixLetters.txt")
                     } else if (score == 55) 
                     {
-                        Fetch("Words/Insane.txt")
+                        Fetch("Words/SevenLetters.txt")
                     } else if (score == 65)
                     {
                         words = []
-                        Fetch("Words/Hard.txt")
-                        Fetch("Words/Evil.txt")
-                        Fetch("Words/Insane.txt")
+                        Fetch("Words/FiveLetters.txt")
+                        Fetch("Words/SixLetters.txt")
+                        Fetch("Words/SevenLetters.txt")
                     } else if (score == 75)
                     {
                         Fetch("Words/TwoWords.txt")
                     } else if (score == 80)
                     {
                         words = []
-                        Fetch("Words/Evil.txt")
-                        Fetch("Words/Insane.txt")
+                        Fetch("Words/SixLetters.txt")
+                        Fetch("Words/SevenLetters.txt")
                         Fetch("Words/TwoWords.txt")
                     } else if (score == 90)
                     {
                         words = []
-                        Fetch("Words/Insane.txt")
+                        Fetch("Words/SevenLetters.txt")
                         Fetch("Words/TwoWords.txt")
                     } else if (score == 95)
                     {
