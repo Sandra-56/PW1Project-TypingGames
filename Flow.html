@@ -3,9 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Flow game</title>
 </head>
+    <style>
+        html, body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; 
+        }
+        body {
+            background-color: #DFE5F2;
+            color: #000000;
+            font-family: monospace;
+            min-height: 100vh;
+            padding-top: 0px;
+        }
+        main{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            font-size: 50px;
+        }
+
+         header{
+            background-color: #1D2659;
+            width: 100%;
+            height: 3vw;
+        }
+        nav{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: transparent;
+            height: 2.6vw;
+            width: 26vw;
+        }
+        @media (max-width: 600px){
+            nav{
+                height: 4vw;
+            }
+        }
+        nav > ul{
+            position: inherit;
+            list-style-type: none;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding-right: 20px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        nav > ul > li > a >img{
+            padding-top: 6px;
+            height: 2.35vw;
+            width: auto;
+            filter: invert(1);
+        }
+
+
+        #TextContainer{
+            position: absolute;
+            width: 80%;
+            left: 10%;
+            height: fit-content;
+            bottom: 50%;
+            transform: translateY(calc(50% + 1.5vw));
+            background-color: white;
+            border: 5px white solid;
+            border-radius: 25px;
+            white-space: pre-wrap;
+            overflow: hidden;
+        }
+        #Green{
+            color: #2D6A61;
+        }
+        #Red{
+            color: #6C5666;
+        }
+    </style>
 <body>
-    <div>Combo game</div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="Main.html"><img src="Icons/Home.png" alt="home"></a></li>
+                <li><a href="#" onclick="PauseFunction(event)"><img src="Icons/Play.png" alt="Play" id="PPButton"></a></li>
+                <li><a href="#" onclick="Reaload()"><img src="Icons/Reaload.png" alt="Reaload"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="TextContainer"><span id="Green"></span><span id="Red"></span><span id="Black"></span></div>
+        <div id="Testing"></div>
+    </main>
+
+    <script>
+
+        const Black = document.getElementById('Black');
+        const Testing = document.getElementById('Testing');
+        const Green = document.getElementById('Green');
+        const Red = document.getElementById('Red');
+        let Buffer = "";
+        let ActiveKey = '';
+        let Sentence = 0;
+
+        let Paused = false;
+        let Wrong = false;
+        
+        let Sentences = [];
+        fetch("Words/Sentences.txt")
+            .then(res => res.text())
+            .then(text => {
+            Sentences = text
+            .split('\n')
+            .map(s => s.trim())
+            .filter(s => s.length > 0);
+
+            GetSentences();
+            ActiveKey = Buffer[0];
+            Testing.textContent = Sentences.length;
+            Black.textContent = Buffer;
+        });
+
+        function GetSentences() {
+            for (let index = 0; index < 5; index++) {
+            const i = Math.floor(Math.random() * Sentences.length);
+            Buffer = Buffer.concat(Sentences[i] + " ");
+            }
+        }
+
+        document.addEventListener('keydown', function(event){
+            if (Paused) return;
+            if (event.key == "Shift") return;
+            if (event.key == ActiveKey){
+                Buffer = Buffer.slice(1);
+                Green.textContent = Green.textContent.concat(ActiveKey);
+                Testing.textContent = "Correct";
+                if (Buffer[0] == " "){
+                    Black.textContent = "_" + Buffer.slice(1);
+                }else {Black.textContent = Buffer;}
+                Red.textContent = "";
+                Wrong = false
+                ActiveKey = Buffer[0];
+                if (event.key == "."){
+                    Sentence++;
+                    if (Sentence == 5){
+                        Green.textContent = "";
+                        Sentence = 0;
+                        GetSentences();
+                    }
+                }
+            } else{
+                if (Wrong) return;
+                Red.textContent = ActiveKey;
+                Black.textContent = Black.textContent.slice(1);
+                Testing.textContent = ActiveKey;
+                Wrong = true;
+            }
+        })
+
+
+
+        const PPButton = document.getElementById('PPButton');
+        function PauseFunction(e){
+            e.preventDefault();
+            if (Paused){
+                PPButton.src = "Icons/Play.png";
+                Paused = false;
+            } else{
+                PPButton.src = "Icons/Pause.png";
+                Paused = true;
+            }
+        }
+        function Reaload(){
+            location.reload(true);
+        }
+    </script>
 </body>
 </html>

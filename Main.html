@@ -21,6 +21,11 @@
             font-family: monospace;
             min-height: 100vh;
         }
+        main{
+          width: 100%;
+          height: 100%;
+          display: flex;
+        }
 
 
 
@@ -231,7 +236,7 @@
     </header>
 
 
-
+    <main>
     <div id = "InfoDiv">
       <h1>
         The info page
@@ -241,7 +246,7 @@
     
     <div id = "IdeasDiv">
       <form>
-      <div id = "Subject"><button class="Buttons" onclick="IdeaSubjects(this, 1, event)" style="background-color: #2D6A61;" id="FirstButton">Bug report</button><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Improvment idea</button><button class="Buttons" onclick="IdeaSubjects(this, 2, event)">Game idea</button></div>
+      <div id = "Subject"><button class="Buttons" onclick="IdeaSubjects(this, 1, event)" style="background-color: #4E63D9; color: white;" id="FirstButton">Bug report</button><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Improvment idea</button><button class="Buttons" onclick="IdeaSubjects(this, 2, event)">Game idea</button></div>
       <div id = "GameName" style="padding-left: 10px;">Related game or page 
         <select name="pages" class="Buttons" aria-placeholder="choose one" id = "One">
           <option value="MainMenu">Main menu</option> <option value="Tower">Tower game </option> <option value="Combo">Combo game</option> <option value="Other">Other</option>
@@ -252,12 +257,15 @@
       <div id = "ContactCheck" style="padding-left: 10px;">Would you like to be contacted about your idea?<input type="checkbox" onchange="ContactCheckBox(this.checked)"> <label id="Instruction">Fill in at least one contact option</label></div>
       <div id = "ContactInfo">
         <textarea placeholder="email" class="Contacts"></textarea> <textarea placeholder="phone number" class="Contacts"></textarea> <textarea placeholder="discord" class="Contacts"></textarea>
-        <button type="submit" class="Buttons" style="background-color: #2D6A61;">Submit</button> 
+        <button type="submit" class="Buttons" style="background-color: #2E3C8C; color: white;">Submit</button> 
       </div>
       </form>
     </div>
+    </main>
 
     <script>
+      //označit hru na kterou scrollneš
+    
       const games = [
       {
         name: "Tower",
@@ -268,7 +276,7 @@
       {
         name: "Flow",
         description: "- you just type the prepared sentences, try not to make any mistakes",
-        image: "GameVisuals/Tower.png",
+        image: "GameVisuals/Flow.png",
         link: "Flow.html"
       },
       {
@@ -280,7 +288,7 @@
       {
         name: "Reaction",
         description: "- You have to press the correct buttons fast",
-        image: "GameVisuals/Tower.png",
+        image: "GameVisuals/Reaction.png",
         link: "Reaction.html"
       }
     ];
@@ -393,9 +401,11 @@
       if (OldSelecion == button){
         return;
       }
-      button.style.backgroundColor = '#2D6A61';
+      button.style.backgroundColor = '#4E63D9';
+      button.style.color = 'White';
       if (OldSelecion){
         OldSelecion.style.backgroundColor = "White";
+        OldSelecion.style.color = 'Black';
       }
       OldSelecion = button;
 

@@ -94,10 +94,17 @@
             score <label id="ScoreNumber">0</label>
         </div>
     </header>
-
-    <div id = "PlayArea"></div>
+    <main>
+        <div id = "PlayArea"></div>
+    </main>
 
      <script>
+
+        // starter menu aby se hra nespustila hned a ani to nevypadalo divně že není spuštěná
+        // obtížnosti - mění SpawnTime a DeleteTime
+        // ukazatek toho kdy se hráč dostane k updatu ať není moc překvapenej
+        // přidat možnost vyměnit čísla za český háčky a čárky
+
         const keyGroups = {
             leftHand: ['a', 's', 'd', 'f', 'w', 'q', 'e', 'r'],
             rightHand: ['j', 'k', 'l', 'i', 'u', 'o', 'p'],
