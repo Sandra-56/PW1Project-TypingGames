@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flow game</title>
-</head>
     <style>
         html, body {
             height: 100vh;
@@ -66,24 +65,34 @@
 
         #TextContainer{
             position: absolute;
-            width: 80%;
-            left: 10%;
             height: fit-content;
+            width: 100%;
             bottom: 50%;
             transform: translateY(calc(50% + 1.5vw));
             background-color: white;
             border: 5px white solid;
-            border-radius: 25px;
             white-space: pre-wrap;
             overflow: hidden;
+            padding-left: 70px;
+            padding-right: 50px;
+            box-sizing: border-box;
         }
         #Green{
             color: #2D6A61;
         }
         #Red{
             color: #6C5666;
+            text-decoration: underline;
+        }
+        #Now{
+            text-decoration: underline;
+        }
+
+        #Testing{
+            display: none;
         }
     </style>
+</head>
 <body>
     <header>
         <nav>
@@ -96,16 +105,19 @@
     </header>
 
     <main>
-        <div id="TextContainer"><span id="Green"></span><span id="Red"></span><span id="Black"></span></div>
+        <div id="TextContainer"><span id="Green"></span><span id="Red"></span><span id="Now"></span><span id="Black"></span></div>
         <div id="Testing"></div>
     </main>
 
     <script>
+        // do úvodu přidat možnost vybrat si kolik chceš zobrazit všt najednou
+        // přidat možnost úpravy zvýraznění
 
         const Black = document.getElementById('Black');
         const Testing = document.getElementById('Testing');
         const Green = document.getElementById('Green');
         const Red = document.getElementById('Red');
+        const Now = document.getElementById('Now');
         let Buffer = "";
         let ActiveKey = '';
         let Sentence = 0;
@@ -142,24 +154,26 @@
                 Buffer = Buffer.slice(1);
                 Green.textContent = Green.textContent.concat(ActiveKey);
                 Testing.textContent = "Correct";
+                Now.textContent = "";
                 if (Buffer[0] == " "){
-                    Black.textContent = "_" + Buffer.slice(1);
-                }else {Black.textContent = Buffer;}
+                    Black.textContent = Buffer.slice(1);
+                    Now.textContent = "_"
+                }else {Black.textContent = Buffer.slice(1); Now.textContent = Buffer[0]}
                 Red.textContent = "";
                 Wrong = false
                 ActiveKey = Buffer[0];
                 if (event.key == "."){
                     Sentence++;
                     if (Sentence == 5){
-                        Green.textContent = "";
                         Sentence = 0;
                         GetSentences();
+                        Green.textContent = "";
                     }
                 }
             } else{
                 if (Wrong) return;
                 Red.textContent = ActiveKey;
-                Black.textContent = Black.textContent.slice(1);
+                Now.textContent = "";
                 Testing.textContent = ActiveKey;
                 Wrong = true;
             }

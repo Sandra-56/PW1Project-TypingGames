@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing games</title>
     <style>
+        @font-face {
+          font-family: "Mockup";
+          src: url(Fonts/mockup-bold.otf);
+        }
         html, body {
             margin: 0;
             padding: 0;
@@ -25,6 +29,7 @@
           width: 100%;
           height: 100%;
           display: flex;
+          flex-direction: column;
         }
 
 
@@ -85,6 +90,19 @@
 
 
 
+        #Logo{
+          width: 100%;
+          height: 250px;
+          background-color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-bottom: #DFE5F2 20px solid;
+          border-top: #DFE5F2 40px solid;
+        }
+
+
+
         .Game{
             height: 500px;
             display: flex;
@@ -102,6 +120,14 @@
             text-align: center;
             height: 100%;
             font-size: 6.5vw;
+            font-family: "Mockup", monospace;
+            justify-content: center;
+        }
+        #Name > img{
+          width: auto;
+          height: auto;
+          align-self: center;
+          transform: scale(1.4);
         }
         #Picture{
             display: flex;
@@ -111,7 +137,7 @@
         }
         #Picture > img{
             width: 100%;
-            height: 50%;
+            height: auto;
             align-self: center;
             border: 5px black;
             border-style: solid;
@@ -139,6 +165,9 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            font-family: "Mockup", monospace;
+            font-size: larger;
+            letter-spacing: 2px;
         }
 
 
@@ -153,10 +182,19 @@
         }
         #InfoDiv{
           display: none;
+          flex-direction: column;
           background-color: #DFE5F2;
           width: 100%;
-          height: 500px;
+          height: fit-content;
           padding-left: 20px;
+        }
+        #InfoTable{
+          border: 2px black solid;
+          border-collapse: collapse;
+        }
+        .TableImage{
+          width: 50px;
+          height: auto;
         }
 
 
@@ -237,31 +275,65 @@
 
 
     <main>
-    <div id = "InfoDiv">
-      <h1>
-        The info page
-      </h1>
-    </div>
+      <div id="Logo"><img src="Logos/SiteLogo.png" alt="logo"></div>
+
+      <div id = "InfoDiv">
+        <h1>
+          The info page
+        </h1>
+        <dl>
+          <dt><h2>What is "The Typing Site" and why I made it</h2> </dt>
+          <dd><h3>- The Typing Site is a website with games that are intended to help people improve their typing skills, while still being fun</h3></dd>
+          <dd><h3>- I decided to make this project partially because I wanted to improve my CSS, HTML, and JavaScript skills, but also because I saw a lot of potential in making a website where I can add games indefinitely</h3></dd>
+          <dt><h2>Project development</h2> </dt>
+          <dd><h3>- I started this project as a complete newbie to JavaScript and without ever having made a single other website, so it was quite the struggle at first. But thanks to AI and all the leaning materials available nowadays it wasn't impossible</h3></dd>
+          <dd><h3>- At first I didn't even intend to make a site with multiple games, I just wanted to play around and had the idea of using player imput to do something. I learned how to make an event listener and set it to keydown, then I made it so that every key a player presses gets displayed on the screen. Then I had the idea to make a game out of it, random words get displayed on the screen and you have to type them out. That's how the Tower game was created.</h3></dd>
+          <dd><h3>- After the first version of my first game I decided to make a lobby, because I had an idea for another one - the Flow game, which was back then called the Combo game and I wanted the players to be able to switch between the games smoothly</h3></dd>
+          <dd><h3>- Sadly, I only make a simple version of the lobby without even using JavaScript and then I gave up on the project. That was until we got assigned a midterm project in my web programming class, I never even thought of starting something new, this was it, I finally had motivation to go back to working on my typing games</h3></dd>
+          <dd><h3>- I knew that if I wanted the lobby to look any good, I needed more games, so I started two new ideas - using the same system as in the Tower game, but this time the words are scrambled aka. The Scrambles game, for the other idea I wanted to make something more game-like - so I settled on the reaction game, where different keys are shown on the screen and you have to press them.</h3></dd>
+          <dt><h2>First functional versions</h2> </dt>
+          <dd> 
+            <table id="InfoTable">
+              <tr>
+                <th><h2>page</h2></th>
+                <td><h3>menu</h3></td>
+              </tr>
+              <tr>
+                <th><h2>Image</h2></th>
+                <td><img src="InfoImages/FunctionalMain.png" alt="menu pic" class="TableImage"></td>
+              </tr>
+            </table>
+          </dd>
+          <dt><h2>The future of this project</h2></dt>
+          <dd><h3>- I definitely don't want to stop working on this site once I submit it as a school project. Most of the games are just barely playable and not too much fun yet, so I am planning on updating them. Each game will have a starter page with an explanation of what to do in the game and options to change difficulty and individual settings for each game</h3></dd>
+          <dd><h3>- Over time I also want to add more games, four is not really a gaming website yet.</h3></dd>
+        </dl>
+      </div>
 
     
-    <div id = "IdeasDiv">
-      <form>
-      <div id = "Subject"><button class="Buttons" onclick="IdeaSubjects(this, 1, event)" style="background-color: #4E63D9; color: white;" id="FirstButton">Bug report</button><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Improvment idea</button><button class="Buttons" onclick="IdeaSubjects(this, 2, event)">Game idea</button></div>
-      <div id = "GameName" style="padding-left: 10px;">Related game or page 
-        <select name="pages" class="Buttons" aria-placeholder="choose one" id = "One">
-          <option value="MainMenu">Main menu</option> <option value="Tower">Tower game </option> <option value="Combo">Combo game</option> <option value="Other">Other</option>
-        </select>
-        <textarea placeholder="game name" class="Buttons" id = "Two"></textarea>
+      <div id = "IdeasDiv">
+        <form>
+          <div id = "Subject"><button class="Buttons" onclick="IdeaSubjects(this, 1, event)" style="background-color: #4E63D9; color: white;" id="FirstButton">Bug report</button><button class="Buttons" onclick="IdeaSubjects(this, 1, event)">Improvment idea</button><button class="Buttons" onclick="IdeaSubjects(this, 2, event)">Game idea</button></div>
+          <div id = "GameName" style="padding-left: 10px;">Related game or page 
+            <select name="pages" class="Buttons" aria-placeholder="choose one" id = "One">
+              <option value="MainMenu">Main menu</option> <option value="Tower">Tower game </option> <option value="Combo">Combo game</option> <option value="Other">Other</option>
+            </select>
+            <textarea placeholder="game name" class="Buttons" id = "Two"></textarea>
+          </div>
+          <div id = "TextInput"> <textarea name="TextInput" placeholder="Type here"></textarea></div>
+          <div id = "ContactCheck" style="padding-left: 10px;">Would you like to be contacted about your idea?<input type="checkbox" onchange="ContactCheckBox(this.checked)"> <label id="Instruction">Fill in at least one contact option</label></div>
+          <div id = "ContactInfo">
+            <textarea placeholder="email" class="Contacts"></textarea> <textarea placeholder="phone number" class="Contacts"></textarea> <textarea placeholder="discord" class="Contacts"></textarea>
+            <button type="submit" class="Buttons" style="background-color: #2E3C8C; color: white;">Submit</button> 
+          </div>
+        </form>
       </div>
-      <div id = "TextInput"> <textarea name="TextInput" placeholder="Type here"></textarea></div>
-      <div id = "ContactCheck" style="padding-left: 10px;">Would you like to be contacted about your idea?<input type="checkbox" onchange="ContactCheckBox(this.checked)"> <label id="Instruction">Fill in at least one contact option</label></div>
-      <div id = "ContactInfo">
-        <textarea placeholder="email" class="Contacts"></textarea> <textarea placeholder="phone number" class="Contacts"></textarea> <textarea placeholder="discord" class="Contacts"></textarea>
-        <button type="submit" class="Buttons" style="background-color: #2E3C8C; color: white;">Submit</button> 
-      </div>
-      </form>
-    </div>
     </main>
+
+
+    <Footer>
+      <label>This website was created as a midterm school project by Sandra Tesařová.</label>
+    </Footer>
 
     <script>
       //označit hru na kterou scrollneš
@@ -271,24 +343,28 @@
         name: "Tower",
         description: "- Type words to build your tower",
         image: "GameVisuals/Tower.png",
+        logo: "Logos/TowerGame.png",
         link: "Tower.html"
       },
       {
         name: "Flow",
         description: "- you just type the prepared sentences, try not to make any mistakes",
         image: "GameVisuals/Flow.png",
+        logo: "Logos/FlowGame.png",
         link: "Flow.html"
       },
       {
         name: "Scrambles",
         description: "- a game where  you have to unscramble words, the least fun one yet",
         image: "GameVisuals/Scrambles.png",
+        logo: "Logos/ScramblesGame.png",
         link: "Scrambles.html"
       },
       {
         name: "Reaction",
         description: "- You have to press the correct buttons fast",
         image: "GameVisuals/Reaction.png",
+        logo: "Logos/ReactionGame.png",
         link: "Reaction.html"
       }
     ];
@@ -305,7 +381,7 @@
       gameDiv.className = "Game";
       gameDiv.id = game.name;
       gameDiv.innerHTML = `
-          <div id="Name">${game.name} game</div>
+          <div id="Name"> <img src="${game.logo}" alt="${game.name} game"></div>
 
           <div id="Picture">
             <img src="${game.image}">
@@ -313,12 +389,13 @@
 
           <div id="Side">
             <div id="Play">
-              <button onclick="window.location.href='${game.link}'">PLAY</button>
+              <button onclick="window.location.href='${game.link}'">play</button>
             </div>
             <div id="Info">${game.description}</div>
           </div>
         `;
-      document.body.appendChild(gameDiv);
+      const Main = document.querySelector("main");
+      Main.appendChild(gameDiv);
 
       const link = document.createElement('a');
       link.textContent = game.name;
@@ -339,6 +416,7 @@
       });
       InfoDiv.style.display = "none";
       IdeasDiv.style.display = 'none';
+      Logo.style.display = 'flex';
 
       const viewportHeight = window.innerHeight;
       const elementTop = el.getBoundingClientRect().top + window.scrollY;
@@ -353,6 +431,7 @@
     let GamesToHide = document.querySelectorAll('.Game');
     let InfoDiv = document.getElementById('InfoDiv');
     let IdeasDiv = document.getElementById('IdeasDiv');
+    let Logo = document.getElementById('Logo')
 
     function ShowInfo(){
       GamesToHide.forEach(game => {
@@ -360,6 +439,7 @@
       });
       IdeasDiv.style.display = 'none';
       InfoDiv.style.display = 'flex';
+      Logo.style.display = 'none'
     }
 
 
@@ -370,6 +450,7 @@
       })
       InfoDiv.style.display = 'none';
       IdeasDiv.style.display = "flex";
+      Logo.style.display = 'none';
     }
 
     const Contacts = document.querySelectorAll('.Contacts');
