@@ -100,6 +100,10 @@
           border-bottom: #DFE5F2 20px solid;
           border-top: #DFE5F2 40px solid;
         }
+        #Logo > img{
+          width: 60%;
+          height: auto;
+        }
 
 
 
@@ -113,6 +117,22 @@
             align-items: center;
             width: 100%;
         }
+        @media (max-width: 1024px){
+          .Game{
+            height: 350px;
+          }
+          
+        }
+        @media (max-width: 768px){
+          .Game{
+            height: 250px;
+          }
+        }
+        @media (max-width: 425px){
+          .Game{
+            height: 150px;
+          }
+        }
         #Name{
             background-color: white;
             display: flex;
@@ -125,9 +145,8 @@
         }
         #Name > img{
           width: auto;
-          height: auto;
+          height: 10vw;
           align-self: center;
-          transform: scale(1.4);
         }
         #Picture{
             display: flex;
@@ -139,7 +158,7 @@
             width: 100%;
             height: auto;
             align-self: center;
-            border: 5px black;
+            border: 0.25vw black;
             border-style: solid;
             border-radius: 10px;
             z-index: 2;
@@ -159,14 +178,14 @@
         }
         #Play > button{
             width: 13vw;
-            height: 60px;
+            height: 3.125vw;
             background-color: #4E63D9;
             color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-family: "Mockup", monospace;
-            font-size: larger;
+            font-size: 2vw;
             letter-spacing: 2px;
         }
 
@@ -189,12 +208,34 @@
           padding-left: 20px;
         }
         #InfoTable{
-          border: 2px black solid;
           border-collapse: collapse;
+          text-align: center;
+          width: 95%;
+          background-color: #1D2659;
+          table-layout: fixed;
+        }
+        #InfoTable th, #InfoTable td {
+          border: 2px white solid;
+          padding: 10px;
+          color: white;
+          font-family: "Mockup", monospace;
+          font-size: 1.2vw;
         }
         .TableImage{
-          width: 50px;
+          max-width: 100%;
           height: auto;
+          border: 1px white solid;
+        }
+
+        h1{
+          font-size: 3vw;
+        }
+        h2{
+          font-size: 2vw;
+        }
+        h3{
+          font-size: 1.5vw;
+          padding-right: 50px;
         }
 
 
@@ -295,18 +336,26 @@
           <dd> 
             <table id="InfoTable">
               <tr>
-                <th><h2>page</h2></th>
+                <th><h3>page</h3></th>
                 <td><h3>menu</h3></td>
+                <td><h3>Tower game</h3></td>
+                <td><h3>Scrambles game</h3></td>
+                <td><h3>Flow game</h3></td>
+                <td><h3>Reaction game</h3></td>
               </tr>
               <tr>
-                <th><h2>Image</h2></th>
+                <th><h3>Image</h3></th>
                 <td><img src="InfoImages/FunctionalMain.png" alt="menu pic" class="TableImage"></td>
+                <td><img src="GameVisuals/Tower.png" alt="tower game pic" class="TableImage"></td>
+                <td><img src="GameVisuals/Scrambles.png" alt="scrambles game pic" class="TableImage"></td>
+                <td><img src="GameVisuals/Flow.png" alt="flow game pic" class="TableImage"></td>
+                <td><img src="GameVisuals/Reaction.png" alt="reaction game pic" class="TableImage"></td>
               </tr>
             </table>
           </dd>
           <dt><h2>The future of this project</h2></dt>
-          <dd><h3>- I definitely don't want to stop working on this site once I submit it as a school project. Most of the games are just barely playable and not too much fun yet, so I am planning on updating them. Each game will have a starter page with an explanation of what to do in the game and options to change difficulty and individual settings for each game</h3></dd>
-          <dd><h3>- Over time I also want to add more games, four is not really a gaming website yet.</h3></dd>
+          <dd><h3>- I definitely don't want to stop working on this site once I submit it as a school project. Most of the games are just barely playable and not too much fun yet, so I am planning on updating them. Each game will have a starter page with an explanation of what to do in the game and options to change difficulty with individual settings for each game</h3></dd>
+          <dd><h3>- Over time I also want to add more games to make this a proper gaming website.</h3></dd>
         </dl>
       </div>
 
